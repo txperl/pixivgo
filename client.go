@@ -183,6 +183,20 @@ func (c *Client) doPost(ctx context.Context, path string, data url.Values, noAut
 }
 
 // parseResponse reads the response body, checks HTTP status, and unmarshals JSON into T.
+func checkResponse(resp *http.Response) error {
+	defer resp.Body.Close()
+	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
+		return nil
+	}
+	body, _ := io.ReadAll(resp.Body)
+	return &PixivError{
+		Message:    fmt.Sprintf("API returned HTTP %d", resp.StatusCode),
+		StatusCode: resp.StatusCode,
+		Header:     resp.Header,
+		Body:       string(body),
+	}
+}
+
 func parseResponse[T any](resp *http.Response) (*T, error) {
 	defer resp.Body.Close()
 
@@ -196,7 +210,7 @@ func parseResponse[T any](resp *http.Response) (*T, error) {
 		}
 	}
 
-	if resp.StatusCode < 200 || resp.StatusCode >= 400 {
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
 		return nil, &PixivError{
 			Message:    fmt.Sprintf("API returned HTTP %d", resp.StatusCode),
 			StatusCode: resp.StatusCode,

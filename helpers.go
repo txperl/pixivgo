@@ -6,6 +6,9 @@ func defaultFilter(f Filter) string {
 	if f == "" {
 		return string(FilterForIOS)
 	}
+	if f == FilterNone {
+		return ""
+	}
 	return string(f)
 }
 

@@ -336,8 +336,7 @@ func (c *Client) UserFollowAdd(ctx context.Context, params UserFollowAddParams) 
 	if err != nil {
 		return err
 	}
-	resp.Body.Close()
-	return nil
+	return checkResponse(resp)
 }
 
 // UserFollowDeleteParams are the parameters for UserFollowDelete.
@@ -353,8 +352,7 @@ func (c *Client) UserFollowDelete(ctx context.Context, params UserFollowDeletePa
 	if err != nil {
 		return err
 	}
-	resp.Body.Close()
-	return nil
+	return checkResponse(resp)
 }
 
 // UserEditAIShowSettingsParams are the parameters for UserEditAIShowSettings.
@@ -370,6 +368,5 @@ func (c *Client) UserEditAIShowSettings(ctx context.Context, params UserEditAISh
 	if err != nil {
 		return err
 	}
-	resp.Body.Close()
-	return nil
+	return checkResponse(resp)
 }

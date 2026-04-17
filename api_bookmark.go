@@ -48,8 +48,7 @@ func (c *Client) IllustBookmarkAdd(ctx context.Context, params IllustBookmarkAdd
 	if err != nil {
 		return err
 	}
-	resp.Body.Close()
-	return nil
+	return checkResponse(resp)
 }
 
 // IllustBookmarkDeleteParams are the parameters for IllustBookmarkDelete.
@@ -65,6 +64,5 @@ func (c *Client) IllustBookmarkDelete(ctx context.Context, params IllustBookmark
 	if err != nil {
 		return err
 	}
-	resp.Body.Close()
-	return nil
+	return checkResponse(resp)
 }

@@ -51,7 +51,7 @@ type Filter string
 
 const (
 	FilterForIOS Filter = "for_ios"
-	FilterNone   Filter = ""
+	FilterNone   Filter = "none"
 )
 
 // IllustType is the type of illustration.
