@@ -81,6 +81,31 @@ func NewClient(opts ...Option) *Client {
 	return c
 }
 
+// Clone returns a copy that shares the underlying *http.Client (transport and
+// connection pool) but holds an independent auth token: SetAuth or Auth on one
+// never affects the other. Use it to pin a token for the duration of a request
+// — e.g. a refresh-and-retry that must not race a concurrent SetAuth.
+func (c *Client) Clone() *Client {
+	c.mu.RLock()
+	defer c.mu.RUnlock()
+	hdr := c.additionalHeaders.Clone()
+	if hdr == nil {
+		hdr = make(http.Header)
+	}
+	return &Client{
+		httpClient:        c.httpClient,
+		hosts:             c.hosts,
+		clientID:          c.clientID,
+		clientSecret:      c.clientSecret,
+		hashSecret:        c.hashSecret,
+		userAgent:         c.userAgent,
+		additionalHeaders: hdr,
+		accessToken:       c.accessToken,
+		refreshToken:      c.refreshToken,
+		userID:            c.userID,
+	}
+}
+
 // SetAPIProxy changes the API base URL (e.g., "http://app-api.pixivlite.com").
 func (c *Client) SetAPIProxy(proxyHosts string) {
 	c.hosts = strings.TrimRight(proxyHosts, "/")

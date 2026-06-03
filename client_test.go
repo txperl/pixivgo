@@ -293,3 +293,28 @@ func TestDoRequest_AuthRequired_ReturnsError(t *testing.T) {
 		t.Errorf("got %v, want ErrAuthRequired", err)
 	}
 }
+
+func TestClone_IndependentAuthSharedTransport(t *testing.T) {
+	orig := NewClient()
+	orig.SetAuth("orig_access", "orig_refresh")
+
+	clone := orig.Clone()
+	if got := clone.getAccessToken(); got != "orig_access" {
+		t.Fatalf("clone access token = %q, want orig_access", got)
+	}
+
+	// Mutating one client's auth must not leak into the other (either way).
+	clone.SetAuth("clone_access", "clone_refresh")
+	if got := orig.getAccessToken(); got != "orig_access" {
+		t.Errorf("orig access token = %q after clone.SetAuth, want orig_access", got)
+	}
+	orig.SetAuth("orig_access2", "orig_refresh2")
+	if got := clone.getAccessToken(); got != "clone_access" {
+		t.Errorf("clone access token = %q after orig.SetAuth, want clone_access", got)
+	}
+
+	// The underlying HTTP client (transport/connection pool) is shared.
+	if clone.httpClient != orig.httpClient {
+		t.Error("clone should share the original's *http.Client")
+	}
+}
