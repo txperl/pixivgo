@@ -200,10 +200,15 @@ type Workspace struct {
 }
 
 // ImageUrls contains illustration image URLs at various sizes.
+//
+// Original is only present on per-page image_urls (meta_pages entries); the
+// top-level illust image_urls omits it (single-page works expose the original
+// via MetaSinglePage.OriginalImageURL instead). Hence the pointer + omitempty.
 type ImageUrls struct {
-	SquareMedium string `json:"square_medium"`
-	Medium       string `json:"medium"`
-	Large        string `json:"large"`
+	SquareMedium string  `json:"square_medium"`
+	Medium       string  `json:"medium"`
+	Large        string  `json:"large"`
+	Original     *string `json:"original,omitempty"`
 }
 
 // IllustrationTag is a tag on an illustration.
