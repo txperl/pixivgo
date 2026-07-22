@@ -4,6 +4,8 @@
 
 Pixiv App-API 的 Go 客户端。[pixivpy](https://github.com/upbit/pixivpy) 的 Golang 复写。
 
+在 [PixivBiu](https://github.com/txperl/PixivBiu) 中使用。
+
 ## 特性
 
 - 零外部依赖 — 仅使用标准库

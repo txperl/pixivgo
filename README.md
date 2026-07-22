@@ -4,6 +4,8 @@ English | [中文](README_zh.md)
 
 A Go client for the Pixiv App-API. Golang rewrite of [pixivpy](https://github.com/upbit/pixivpy).
 
+Used in production by [PixivBiu](https://github.com/txperl/PixivBiu).
+
 ## Features
 
 - Zero external dependencies — standard library only
