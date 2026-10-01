@@ -27,7 +27,7 @@ func (c *Client) IllustBookmarkDetail(ctx context.Context, params IllustBookmark
 type IllustBookmarkAddParams struct {
 	IllustID int
 	Restrict Restrict
-	Tags     []string
+	Tags     []string // nil omits tags; a non-nil empty slice explicitly clears them.
 	NoAuth   bool
 }
 
@@ -41,7 +41,7 @@ func (c *Client) IllustBookmarkAdd(ctx context.Context, params IllustBookmarkAdd
 		"illust_id": {strconv.Itoa(params.IllustID)},
 		"restrict":  {restrict},
 	}
-	if len(params.Tags) > 0 {
+	if params.Tags != nil {
 		data.Set("tags[]", strings.Join(params.Tags, " "))
 	}
 	resp, err := c.doPost(ctx, "/v2/illust/bookmark/add", data, params.NoAuth)

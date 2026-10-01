@@ -165,6 +165,10 @@ Full API reference: [GoDoc](https://pkg.go.dev/github.com/txperl/pixivgo)
 
 This project is a Golang rewrite of [pixivpy](https://github.com/upbit/pixivpy/tree/4f2e9ea7fff6247d9f5bfe5a862e92c5dfe3b6dd) by [@upbit](https://github.com/upbit). Thank you for the excellent work on the original Python client.
 
+## Bookmark tags
+
+`IllustBookmarkAddParams.Tags` distinguishes omission from replacement: `nil` omits the upstream tag field, a non-nil empty slice sends an explicit empty field to clear tags, and a non-empty slice sends the complete tag set. The App-API uses a space-separated tag field; callers must not silently split a tag containing whitespace.
+
 ## License
 
 Feel free to use, reuse and abuse the code in this project.

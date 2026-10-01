@@ -165,6 +165,10 @@ if errors.As(err, &pe) {
 
 本项目是 [@upbit](https://github.com/upbit) 的 [pixivpy](https://github.com/upbit/pixivpy/tree/4f2e9ea7fff6247d9f5bfe5a862e92c5dfe3b6dd) 的 Golang 复写，感谢原作者在 Python 客户端上的出色工作。
 
+## 收藏标签
+
+`IllustBookmarkAddParams.Tags` 区分省略与替换：`nil` 不发送上游标签字段，非 nil 空切片发送显式空字段以清空标签，非空切片发送完整标签集合。App-API 使用空格分隔标签；调用方不能静默拆分含空白的单个标签。
+
 ## License
 
 Feel free to use, reuse and abuse the code in this project.
